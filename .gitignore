@@ -1,0 +1,8 @@
+# ignore the net-states directory
+net-states/
+
+code/127.0.0.1/
+code/__pycache__/
+
+
+
