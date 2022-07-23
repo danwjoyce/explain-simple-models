@@ -3,6 +3,7 @@ import torch.nn as nn
 import torch
 import os
 import numpy as np
+import pandas as pd
 
 class Network2(nn.Module):
     def __init__(self, input_size, hidden_size, output_size):
@@ -100,4 +101,14 @@ def save_network(network, ident_label, epoch_label):
 def load_network(network, fname):
     load_path = os.path.join('../net-states', fname)
     network.load_state_dict( torch.load(load_path) )
-    
+
+def parameters_to_csv( model, this_label ):
+    count = 0
+    for w in list(model.parameters()):
+        count += 1
+        this_param = w.detach().numpy()
+        save_filename = this_label + '-net-params-' + str(count) + '.csv'
+        save_path = os.path.join('../out-data', save_filename)
+        df = pd.DataFrame( this_param )
+        df.to_csv(save_path, header = False, index = False)
+
